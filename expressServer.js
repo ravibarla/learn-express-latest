@@ -4,14 +4,24 @@ const express = require("express");
 const server = express();
 
 //2. handle default request
-server.get("/", 
-(req, res,next) => {
-console.log("this is from first middleware")
-next()
-});
 
-server.get("/", 
-(req, res) => {
+function firstMiddleware(req, res, next) {
+  console.log("this is first middleware");
+  next();
+}
+function secondMiddleware(req, res, next) {
+  console.log("this is second middleware");
+  next();
+}
+
+//route level middleware
+function globalMiddleware(req, res, next) {
+  console.log("this is global middleware");
+  next();
+}
+//this is going to execute all request
+server.use(globalMiddleware);
+server.get("/send", [firstMiddleware, secondMiddleware], (req, res) => {
   res.send("welcome to express server");
 });
 
