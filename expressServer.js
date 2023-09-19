@@ -5,13 +5,13 @@ const server = express();
 
 //2. handle default request
 server.get("/", 
-//1. first middleware
-(req,res,next)=>{
-  console.log("first middleware")
-  next()
-}
-//2. second middleware
-,(req, res) => {
+(req, res,next) => {
+console.log("this is from first middleware")
+next()
+});
+
+server.get("/", 
+(req, res) => {
   res.send("welcome to express server");
 });
 
